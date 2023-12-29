@@ -1213,7 +1213,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorTilemap: {fileID: 1286594535}
+  wallTilemap: {fileID: 1949665687}
   floorTile: {fileID: 11400000, guid: 39d0a1ee94828f440aa8f35ea94edbab, type: 2}
+  wallTile: {fileID: 11400000, guid: aa6e7d1153f93eb46bcfddd955aad9f4, type: 2}
 --- !u!4 &936384734
 Transform:
   m_ObjectHideFlags: 0
@@ -3249,9 +3251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemapVisualizer: {fileID: 936384733}
   startPosition: {x: 0, y: 0}
-  iterations: 20
-  walkLength: 10
-  startRandomlyEachIteration: 1
+  randomWalkParameters: {fileID: 11400000, guid: 4c222000165661941b8cd92e3149410f, type: 2}
 --- !u!4 &1687872883
 Transform:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class ProceduralGenerationAlgorithms
 {
-    public static HashSet<Vector2Int> SimpleRandomWalk(Vector2Int startPosition, int walkLength)
+    public static HashSet<Vector2Int> RandomWalk(Vector2Int startPosition, int walkLength)
     {
         HashSet<Vector2Int> path = new HashSet<Vector2Int>();
         var previousPosition = startPosition;
@@ -20,6 +20,7 @@ public static class ProceduralGenerationAlgorithms
 }
 public static class Direction2D
 {
+    //List of moving Directions
     public static List<Vector2Int> cardinalDirectionsList = new List<Vector2Int>
     {
         new Vector2Int(0, 1), //UP
