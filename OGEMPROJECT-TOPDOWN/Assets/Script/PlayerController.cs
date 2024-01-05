@@ -42,11 +42,14 @@ public class PlayerController : MonoBehaviour
 
     private float dashCooldown = 2f; 
     private float lastDashTime;
+    private Animator playerAnimator;
     
     #endregion
 
     private void Start()
     {
+        playerAnimator = GetComponent<Animator>();
+
         health = new SurvivalBar();
         hunger = new SurvivalBar();
         stamina = new SurvivalBar();    
@@ -71,13 +74,16 @@ public class PlayerController : MonoBehaviour
         hungerSlider.value = hunger.Bar;
         healthSlider.value = health.Bar;
         
-        rotatePlayer();
     }
 
     //Player movement
     public void Move(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
+
+        //set movement/idle animation
+        playerAnimator.SetFloat("Xinput", movementInput.x);
+        playerAnimator.SetFloat("Yinput", movementInput.y);
     }
 
     public void Dash(InputAction.CallbackContext context)
@@ -96,6 +102,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(dashDirection * dashForce, ForceMode2D.Impulse);
 
             //play anim
+            playerAnimator.SetTrigger("isDashed");
         }
     }
 
@@ -137,27 +144,4 @@ public class PlayerController : MonoBehaviour
         stamina.Bar = Mathf.Clamp(stamina.Bar, 0f, Stamina);
     }
 
-    public void rotatePlayer()
-    {
-
-        if(movementInput.x < 0)
-        {
-            scale.x = -1;
-            Debug.Log("char moving right " + movementInput);
-        }
-        else if(movementInput.x > 0)
-        {
-            scale.x = 1;
-            Debug.Log("char moving right " + movementInput);
-        }
-        else if(movementInput.y < 0){
-            scale.y = -1;
-        }
-        else if (movementInput.y > 0)
-        {
-            scale.y = 1;
-        }
-
-        transform.localScale = scale;
-    }
 }
