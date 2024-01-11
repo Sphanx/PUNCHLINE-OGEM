@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AllahinCezasiBar : MonoBehaviour
+public class AllahinCezasi : MonoBehaviour
 {
     SurvivalBar enemyHealth;
     [SerializeField] int health;
@@ -74,6 +74,11 @@ public class AllahinCezasiBar : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, enemyfovRadius);
+    }
+
+    public void A()
+    {
+            
     }
 }
 
