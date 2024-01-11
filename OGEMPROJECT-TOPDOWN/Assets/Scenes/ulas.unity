@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 265376112}
   - component: {fileID: 265376113}
   - component: {fileID: 265376114}
+  - component: {fileID: 265376115}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -399,6 +400,21 @@ MonoBehaviour:
   checkPlayer: 0
   playerObj: {fileID: 0}
   enemySpeed: 4
+--- !u!114 &265376115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265376108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537803b052271d24596a652fc71381bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 10
+  attackCooldown: 3
+  attackRange: 2
 --- !u!1 &803845054
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,8 +600,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 1.18, y: 0}
+  m_SizeDelta: {x: -7.65, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012876234 stripped
 MonoBehaviour:
