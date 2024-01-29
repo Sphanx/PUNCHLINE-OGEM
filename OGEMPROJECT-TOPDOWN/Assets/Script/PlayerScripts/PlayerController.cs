@@ -13,20 +13,23 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float dashForce;
     public float dashCooldown = 2f; 
-    public float hungerVar;
+    public float motivationVar;
     public float staminaVar;
     public float staminaRecoverySpeed;
+    public float timeRemaining;
     public bool isMoving;
+    public bool isTimerRunning;
+    public IEnumerator currentStaminaRecovery;
 
     [Space(20)]
     [Tooltip("Health")]
     [SerializeField] int Health = 100;
-    [Tooltip("Hunger")]
-    [SerializeField] int Hunger = 100;
+    [Tooltip("Motivation")]
+    [SerializeField] int Motivation = 100;
     [Tooltip("Stamina")]
     [SerializeField] int Stamina = 100;
     public Slider staminaSlider;
-    public Slider hungerSlider;
+    public Slider motivationSlider;
     public Slider healthSlider;
 
 
@@ -40,12 +43,11 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 scale;
     SurvivalBar health;
-    SurvivalBar hunger;
+    SurvivalBar motivation;
     public SurvivalBar stamina;
 
     private float lastDashTime;
     private Animator playerAnimator;
-    private IEnumerator currentStaminaRecovery;
 
 
     #endregion
@@ -55,14 +57,16 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
 
         health = new SurvivalBar();
-        hunger = new SurvivalBar();
+        motivation = new SurvivalBar();
         stamina = new SurvivalBar();    
 
         health.FullValue = Health;
-        hunger.FullValue = Hunger;
+        motivation.FullValue = Motivation;
         stamina.FullValue = Stamina;
 
         scale = transform.localScale;
+
+        isTimerRunning = false;
 
     }
 
@@ -72,10 +76,11 @@ public class PlayerController : MonoBehaviour
         Vector2 movement = new Vector2(movementInput.x, movementInput.y) * moveSpeed * Time.deltaTime;  // assign movement info to vector2 movement
         transform.Translate(movement);
 
+        
         DecreaseValue();
 
         staminaSlider.value = stamina.Bar;
-        hungerSlider.value = hunger.Bar;
+        motivationSlider.value = motivation.Bar;
         healthSlider.value = health.Bar;
 
         if(movementInput.x != 0 || movementInput.y != 0)
@@ -108,9 +113,11 @@ public class PlayerController : MonoBehaviour
             Debug.Log("DASH ATII");
             DecreaseValue(stamina, reduceStmOnDash);
             Debug.Log("stamina: " + stamina.Bar);
-            StartStaminaRecovery();
+            isTimerRunning = true;
+            
+            //get dash time
             lastDashTime = Time.time;
-            stamina.Bar = stamina.IncreaseBar(1f);
+            
 
             //add an instant speed
             Vector2 dashDirection = new Vector2(movementInput.x, movementInput.y).normalized;
@@ -118,6 +125,14 @@ public class PlayerController : MonoBehaviour
 
             //play anim
             playerAnimator.SetTrigger("isDashed");
+
+            if(currentStaminaRecovery != null)
+            {
+                StopCoroutine(currentStaminaRecovery);
+            }
+
+            currentStaminaRecovery = StaminaRecovery();
+            StartCoroutine(currentStaminaRecovery);
         }
     }
 
@@ -140,16 +155,10 @@ public class PlayerController : MonoBehaviour
     }
     private void DecreaseValue()
     {
-
-        DecreaseValue(hunger, hungerVar * Time.deltaTime);
-
-        if (isDashing)
-        {
-            DecreaseValue(stamina, staminaVar * Time.deltaTime);
-        }
+        DecreaseValue(motivation, motivationVar * Time.deltaTime);
 
     }
-    private IEnumerator StaminaRecovery()
+    public IEnumerator StaminaRecovery()
     {
         while (stamina.Bar < Stamina)
         {
@@ -161,6 +170,13 @@ public class PlayerController : MonoBehaviour
     public void StartStaminaRecovery()
     {
         StartCoroutine(StaminaRecovery());
+    }
+    public void StopStaminaRecovery()
+    {
+        if (currentStaminaRecovery != null)
+        {
+            StopAllCoroutines();
+        }
     }
 
 }

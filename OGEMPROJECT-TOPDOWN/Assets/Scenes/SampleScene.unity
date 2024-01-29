@@ -2847,8 +2847,8 @@ GameObject:
   - component: {fileID: 1377659780}
   - component: {fileID: 1377659774}
   - component: {fileID: 1377659778}
-  - component: {fileID: 1377659772}
   - component: {fileID: 1377659781}
+  - component: {fileID: 1377659772}
   - component: {fileID: 1377659777}
   m_Layer: 0
   m_Name: Player
@@ -3079,19 +3079,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e02d225e2c12427478b993456d3d3c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reduceStmOnDash: 15
+  reduceStmOnDash: 30
   moveSpeed: 5
   dashForce: 15
   dashCooldown: 1
-  hungerVar: 3
+  motivationVar: 0
   staminaVar: 30
-  staminaRecoverySpeed: 5
+  staminaRecoverySpeed: 4
+  timeRemaining: 0
   isMoving: 0
+  isTimerRunning: 0
   Health: 100
-  Hunger: 100
+  Motivation: 100
   Stamina: 100
   staminaSlider: {fileID: 1674202524}
-  hungerSlider: {fileID: 1978944515}
+  motivationSlider: {fileID: 1978944515}
   healthSlider: {fileID: 1352259579}
   rb: {fileID: 1377659777}
 --- !u!95 &1377659779
