@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
+   
     #region public fields
     [Header("variable values")]
     public float reduceStmOnDash;
