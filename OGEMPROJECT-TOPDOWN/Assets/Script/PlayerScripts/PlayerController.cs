@@ -126,11 +126,7 @@ public class PlayerController : MonoBehaviour
             //play anim
             playerAnimator.SetTrigger("isDashed");
 
-            if(currentStaminaRecovery != null)
-            {
-                StopCoroutine(currentStaminaRecovery);
-            }
-
+            StopStaminaRecovery();
             currentStaminaRecovery = StaminaRecovery();
             StartCoroutine(currentStaminaRecovery);
         }

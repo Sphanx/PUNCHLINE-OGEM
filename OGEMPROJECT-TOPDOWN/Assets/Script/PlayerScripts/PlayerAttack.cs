@@ -19,7 +19,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        
+        AttackDirection();
     }
 
     public void Attack(InputAction.CallbackContext context)
@@ -41,6 +41,7 @@ public class PlayerAttack : MonoBehaviour
             Debug.Log("stamina: " + playerController.stamina.Bar);
 
             playerController.StopStaminaRecovery();
+            playerController.currentStaminaRecovery = playerController.StaminaRecovery();
             playerController.StartStaminaRecovery();
 
         }
@@ -59,5 +60,25 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+    public void AttackDirection()
+    {
+        attackPoint.position = playerController.transform.position;
+        if(playerController.movementInput.x > 0)
+        {
+            attackPoint.position += new Vector3(1, 0);
+        }
+        else if (playerController.movementInput.x < 0)
+        {
+            attackPoint.position += new Vector3(-1, 0);
+        }
+        else if (playerController.movementInput.y > 0)
+        {
+            attackPoint.position += new Vector3(0, 1);
+        }
+        else if (playerController.movementInput.y < 0)
+        {
+            attackPoint.position += new Vector3(0, -1);
+        }
 
+    }
 }
