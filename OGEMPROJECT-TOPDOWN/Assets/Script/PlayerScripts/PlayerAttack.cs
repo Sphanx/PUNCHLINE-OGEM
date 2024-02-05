@@ -6,20 +6,38 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] PlayerController playerController;
+    [Space(20)]
     [SerializeField] int damage;
-    [SerializeField] bool isAttacking = false;
     [SerializeField] float attackCD;
+    public float attackDistance;
+    [SerializeField] float knockbackForce;
+    [SerializeField] float enemyStun;
+    [SerializeField] float reduceStaminaOnAttack;
+    [Space(20)]
+    [SerializeField] bool isHit;
+    [SerializeField] bool isAttacking = false;
+    Vector2 knockbackDirection;
+
+    float enemyStunPlaceHolder;
+
+    AllahinCezasi currentEnemy;
+    
+
 
     float lastDashTime;
 
-    public Transform attackPoint;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
 
+    private void Start()
+    {
+        enemyStunPlaceHolder = enemyStun;    
+    }
+
     private void Update()
     {
-        AttackDirection();
+        setEnemyStun();
     }
 
     public void Attack(InputAction.CallbackContext context)
@@ -30,14 +48,18 @@ public class PlayerAttack : MonoBehaviour
             
             Debug.Log("Saldýrdý");
             //Hit functions
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(playerController.attackPoint.position, attackRange, enemyLayers);
             foreach (Collider2D enemy in hitEnemies)
             {
+                isHit = true;
                 Debug.Log("Düþmana vurdu! " + enemy.name);
+                currentEnemy = enemy.GetComponent<AllahinCezasi>();
+                AttackOutcome(enemy);
+                
             }
 
             //decrease stamina
-            playerController.DecreaseValue(playerController.stamina, 20);
+            playerController.DecreaseValue(playerController.stamina, reduceStaminaOnAttack);
             Debug.Log("stamina: " + playerController.stamina.Bar);
 
             playerController.StopStaminaRecovery();
@@ -54,31 +76,41 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (attackPoint == null)
+        if (playerController.attackPoint == null)
             return;
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
-    public void AttackDirection()
+        Gizmos.DrawWireSphere(playerController.attackPoint.position, attackRange);
+    }    
+    
+    public void AttackOutcome(Collider2D enemy)
     {
-        attackPoint.position = playerController.transform.position;
-        if(playerController.movementInput.x > 0)
-        {
-            attackPoint.position += new Vector3(1, 0);
-        }
-        else if (playerController.movementInput.x < 0)
-        {
-            attackPoint.position += new Vector3(-1, 0);
-        }
-        else if (playerController.movementInput.y > 0)
-        {
-            attackPoint.position += new Vector3(0, 1);
-        }
-        else if (playerController.movementInput.y < 0)
-        {
-            attackPoint.position += new Vector3(0, -1);
-        }
 
+        knockbackDirection = (enemy.transform.position - transform.position).normalized;
+        enemy.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+    }
+    public void setEnemyStun()
+    {
+        enemyStun -= Time.deltaTime;
+        if (isHit)
+        {
+            if (enemyStun < 0.0f)
+            {
+                currentEnemy.isDetecting = true;
+                currentEnemy.checkPlayer = true;
+                isHit = false;
+                currentEnemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                enemyStun = enemyStunPlaceHolder;
+            }
+           else
+            {
+                currentEnemy.isDetecting = false;
+                currentEnemy.checkPlayer = false;
+            } 
+        }
+        else
+        {
+            enemyStun = enemyStunPlaceHolder;
+        }
     }
 }

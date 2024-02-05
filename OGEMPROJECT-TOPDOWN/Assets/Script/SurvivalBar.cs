@@ -15,10 +15,12 @@ public class SurvivalBar
     public float FullValue
     {
         get { return fullValue; } 
-        set { survivalBar = value; }
+        set { survivalBar = value;
+            fullValue = survivalBar;
+        }
     }
 
-    public float ReduceBar(float amount)
+    public float DecreaseBar(float amount)
     {
         return survivalBar -= amount;
     }

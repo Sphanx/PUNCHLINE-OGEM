@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,8 @@ public class AllahinCezasi : MonoBehaviour
     [SerializeField] Slider enemyHealthSlider;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] int enemyfovRadius;
-    [SerializeField] bool checkPlayer;
+    public bool checkPlayer;
+    public bool isDetecting = true;
     [SerializeField] GameObject playerObj;
     [SerializeField] int enemySpeed;
     void Start()
@@ -27,22 +29,26 @@ public class AllahinCezasi : MonoBehaviour
     
     void Update()
     {
-        DetectPlayer();
-        if (Input.GetKeyDown(KeyCode.O))
+        if(isDetecting)
         {
-            TakeDamage(50);
-            Debug.Log(enemyHealth.Bar);
-        }
-        if (checkPlayer == true)
-        {
-            FollowPlayer();
-            Debug.Log("Oyuncu Görüldü");
+            DetectPlayer();
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                TakeDamage(50);
+                Debug.Log(enemyHealth.Bar);
+            }
+            if (checkPlayer == true)
+            {
+                FollowPlayer();
+                Debug.Log("Oyuncu Görüldü");
+
+            }
         }
     }
 
     public void TakeDamage(int amount)
     {
-        enemyHealth.ReduceBar(amount);
+        enemyHealth.DecreaseBar(amount);
         enemyHealthSlider.value = enemyHealth.Bar;
         if (enemyHealth.Bar <= 0 )
         {

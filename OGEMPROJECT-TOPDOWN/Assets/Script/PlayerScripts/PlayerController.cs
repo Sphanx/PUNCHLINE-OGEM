@@ -13,26 +13,27 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float dashForce;
     public float dashCooldown = 2f; 
-    public float motivationVar;
-    public float staminaVar;
     public float staminaRecoverySpeed;
     public float timeRemaining;
+    public int potionNumber;
     public bool isMoving;
     public bool isTimerRunning;
     public IEnumerator currentStaminaRecovery;
 
+
     [Space(20)]
     [Tooltip("Health")]
     [SerializeField] int Health = 100;
-    [Tooltip("Motivation")]
-    [SerializeField] int Motivation = 100;
     [Tooltip("Stamina")]
     [SerializeField] int Stamina = 100;
     public Slider staminaSlider;
-    public Slider motivationSlider;
     public Slider healthSlider;
 
-
+    [Space(20)]
+    [SerializeField] PlayerAttack playerAttackScript;
+    [SerializeField] Potions potionsScript;
+    [SerializeField] PotionCounter potionCounterScript;
+    public Transform attackPoint;
     public Rigidbody2D rb;
     #endregion
 
@@ -43,7 +44,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 scale;
     SurvivalBar health;
-    SurvivalBar motivation;
     public SurvivalBar stamina;
 
     private float lastDashTime;
@@ -52,20 +52,23 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    private void Awake()
+    {
+        potionsScript = GetComponent<Potions>();
+        health = new SurvivalBar();
+        stamina = new SurvivalBar();    
+    }
     private void Start()
     {
-        playerAnimator = GetComponent<Animator>();
-
-        health = new SurvivalBar();
-        motivation = new SurvivalBar();
-        stamina = new SurvivalBar();    
-
         health.FullValue = Health;
-        motivation.FullValue = Motivation;
         stamina.FullValue = Stamina;
 
-        scale = transform.localScale;
+        potionsScript.numberOfPotions = potionNumber;
 
+        playerAnimator = GetComponent<Animator>();
+
+        scale = transform.localScale;
+        
         isTimerRunning = false;
 
     }
@@ -75,12 +78,11 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 movement = new Vector2(movementInput.x, movementInput.y) * moveSpeed * Time.deltaTime;  // assign movement info to vector2 movement
         transform.Translate(movement);
-
+        LookDirection();
         
         DecreaseValue();
 
         staminaSlider.value = stamina.Bar;
-        motivationSlider.value = motivation.Bar;
         healthSlider.value = health.Bar;
 
         if(movementInput.x != 0 || movementInput.y != 0)
@@ -93,7 +95,10 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("isMoving", false);
             isMoving = false;
         }
-        
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            TakeDamage(31);
+        }
     }
 
     //Player movement
@@ -132,6 +137,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void HealSelf(InputAction.CallbackContext context)
+    {
+        if(context.performed && potionsScript.numberOfPotions != 0)
+        {
+            if(health.Bar > health.FullValue)
+            {
+                health.Bar = health.FullValue;
+            }
+            else
+            {
+                health.IncreaseBar(potionsScript.healAmount);
+                potionsScript.numberOfPotions--;
+                potionCounterScript.setPotionTextNumber(potionsScript);
+                Debug.Log("health increased: " + health.Bar + "full health: " + health.FullValue);
+            }
+        }
+    }
+    public void TakeDamage(float damageAmount)
+    {
+        health.DecreaseBar(damageAmount);
+    }
     public void DecreaseValue(SurvivalBar survivalBar, float decreaseAmount)
     {
         float barPlaceholder = survivalBar.Bar;
@@ -151,8 +177,6 @@ public class PlayerController : MonoBehaviour
     }
     private void DecreaseValue()
     {
-        DecreaseValue(motivation, motivationVar * Time.deltaTime);
-
     }
     public IEnumerator StaminaRecovery()
     {
@@ -172,6 +196,32 @@ public class PlayerController : MonoBehaviour
         if (currentStaminaRecovery != null)
         {
             StopAllCoroutines();
+        }
+    }
+    public void LookDirection()
+    {
+        attackPoint.position = transform.position;
+        if (movementInput.x > 0)
+        {
+            attackPoint.position += new Vector3(playerAttackScript.attackDistance, 0);
+            playerAnimator.SetFloat("Xinput", 1);
+        }
+        else if (movementInput.x < 0)
+        {
+            attackPoint.position += new Vector3(-playerAttackScript.attackDistance, 0);
+            playerAnimator.SetFloat("Xinput", -1);
+
+        }
+        else if (movementInput.y > 0)
+        {
+            attackPoint.position += new Vector3(0, playerAttackScript.attackDistance);
+            playerAnimator.SetFloat("Yinput", 1);
+
+        }
+        else if (movementInput.y < 0)
+        {
+            attackPoint.position += new Vector3(0, -playerAttackScript.attackDistance);
+            playerAnimator.SetFloat("Yinput", -1);
         }
     }
 
