@@ -870,6 +870,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2016706435978792723, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2027993826621848501, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.53
@@ -910,6 +914,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2627013922825168726, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 1ad117bbaaba1f5408785eeb03205eb9, type: 2}
     - target: {fileID: 3233501407996640700, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -917,6 +925,26 @@ PrefabInstance:
     - target: {fileID: 3233501407996640700, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217773141644943595, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4557869048016503113, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884600113573772300, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162375484628581186, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7483585945062512589, guid: 7ba8f725ee8d28d499621d7b37478062, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3824,6 +3852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7649091732f2940a451946b3225a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  potionsCount: {fileID: 2017270538}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

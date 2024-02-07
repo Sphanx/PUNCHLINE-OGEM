@@ -63,7 +63,9 @@ public class PlayerController : MonoBehaviour
         health.FullValue = Health;
         stamina.FullValue = Stamina;
 
+        //set potions
         potionsScript.numberOfPotions = potionNumber;
+        potionCounterScript.setPotionTextNumber(potionsScript);
 
         playerAnimator = GetComponent<Animator>();
 

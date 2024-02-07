@@ -5,10 +5,9 @@ using TMPro;
 
 public class PotionCounter : MonoBehaviour
 {
-    TextMeshProUGUI potionsCount;
+    [SerializeField] TextMeshProUGUI potionsCount;
     private void Start()
     {
-        TextMeshProUGUI potionsCount = this.GetComponent<TextMeshProUGUI>();
 
     }
     public void setPotionTextNumber(Potions potionsScript)
