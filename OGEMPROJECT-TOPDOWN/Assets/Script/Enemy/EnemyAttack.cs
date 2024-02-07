@@ -59,4 +59,9 @@ public class EnemyAttack : MonoBehaviour
             AttackPlayer();
         }
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }
