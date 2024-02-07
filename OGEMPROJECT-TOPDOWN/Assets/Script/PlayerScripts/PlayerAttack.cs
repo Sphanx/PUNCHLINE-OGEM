@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
                 isHit = true;
                 Debug.Log("Düþmana vurdu! " + enemy.name);
                 currentEnemy = enemy.GetComponent<AllahinCezasi>();
-                AttackOutcome(enemy);
+                AttackOutcome(enemy, currentEnemy);
                 
             }
 
@@ -83,16 +83,16 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.DrawWireSphere(playerController.attackPoint.position, attackRange);
     }    
     
-    public void AttackOutcome(Collider2D enemy)
+    public void AttackOutcome(Collider2D enemy, AllahinCezasi enemyScript)
     {
-
+        enemyScript.TakeDamage(damage);
         knockbackDirection = (enemy.transform.position - transform.position).normalized;
         enemy.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
     }
     public void setEnemyStun()
     {
         enemyStun -= Time.deltaTime;
-        if (isHit)
+        if (isHit && currentEnemy)
         {
             if (enemyStun < 0.0f)
             {

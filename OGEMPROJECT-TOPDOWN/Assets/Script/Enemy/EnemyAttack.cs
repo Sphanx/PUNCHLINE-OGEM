@@ -5,63 +5,85 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int damageAmount = 10; // Saldýrý hasar miktarý
-    public float attackCooldown = 3f; // Saldýrýlar arasýndaki cooldown süresi (örnekte 3 saniye)
-    public float attackRange = 2f; // Düþmanýn saldýrý yapabileceði maksimum mesafe
-
+    public int damageAmount = 10; // Saldï¿½rï¿½ hasar miktarï¿½
+    public float attackCooldown = 3f; // Saldï¿½rï¿½lar arasï¿½ndaki cooldown sï¿½resi (ï¿½rnekte 3 saniye)
+    public float attackRange = 2f; // Dï¿½ï¿½manï¿½n saldï¿½rï¿½ yapabileceï¿½i maksimum mesafe
+    public PlayerController playerController;
+    public float attackDelay;
+    public float enemyAttackAnimRange;
     private float cooldownTimer = 0f;
+    public Vector2 playerPosition;
+    float distanceToPlayer;
 
+    Animator enemyAnimator;
+
+    private void Start()
+    {
+        enemyAnimator = GetComponent<Animator>();
+    }
     void Update()
     {
-        // Cooldown süresini kontrol et ve azalt
-        if (cooldownTimer > 0)
-        {
-            cooldownTimer -= Time.deltaTime;
-        }
-
-        // Düþmanýn oyuncuya saldýrma durumu (örnek)
-        if (cooldownTimer <= 0 && IsPlayerInRange())
-        {
-            AttackPlayer();
-        }
+        // Cooldown sï¿½resini kontrol et ve azalt
+        IsPlayerInRange();
+        // Dï¿½ï¿½manï¿½n oyuncuya saldï¿½rma durumu (ï¿½rnek)
+        PlayenemyAttackAnim();
+        
     }
 
     void AttackPlayer()
     {
-        // Oyuncuya saldýrma kodlarý burada yazýlýr
-        // Örneðin: Oyuncuya hasar verme
+        if (IsPlayerInRange())
+        {
+            playerController.TakeDamage(damageAmount);
+            
+        }
+        // Oyuncuya saldï¿½rma kodlarï¿½ burada yazï¿½lï¿½r
+        // ï¿½rneï¿½in: Oyuncuya hasar verme
         Debug.Log("Enemy attacks player!");
 
-        // Cooldown'u baþlat
-        cooldownTimer = attackCooldown;
+        // Cooldown'u baï¿½lat
+    }
+    public void PlayenemyAttackAnim()
+    {
+        distanceToPlayer = Vector2.Distance(playerPosition, transform.position);
+        if(distanceToPlayer <= enemyAttackAnimRange)
+        {
+            enemyAnimator.SetBool("isAttacking", true);
+        }
+        else
+        {
+            enemyAnimator.SetBool("isAttacking", false);
+        }
     }
 
     bool IsPlayerInRange()
     {
-        // Oyuncunun pozisyonunu al
-        Vector2 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
 
-        // Düþmanýn pozisyonunu al
+        // Dï¿½ï¿½manï¿½n pozisyonunu al
         Vector2 enemyPosition = transform.position;
 
-        // Oyuncu ile düþman arasýndaki mesafeyi kontrol et
-        float distanceToPlayer = Vector2.Distance(playerPosition, enemyPosition);
+        // Oyuncu ile dï¿½ï¿½man arasï¿½ndaki mesafeyi kontrol et
+        distanceToPlayer = Vector2.Distance(playerPosition, enemyPosition);
 
-        // Eðer oyuncu düþmanýn saldýrý alanýndaysa true döndür
+        // Eï¿½er oyuncu dï¿½ï¿½manï¿½n saldï¿½rï¿½ alanï¿½ndaysa true dï¿½ndï¿½r
         return distanceToPlayer <= attackRange;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && cooldownTimer <= 0)
+        if (other.CompareTag("Player"))
         {
-            // Oyuncuya saldýr
+            // Oyuncuya saldï¿½r
             AttackPlayer();
         }
     }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, enemyAttackAnimRange);
     }
+
 }
