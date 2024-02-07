@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2690300496292921511}
   - component: {fileID: 975973175911782034}
   m_Layer: 7
-  m_Name: Canvas
+  m_Name: EnemyHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
