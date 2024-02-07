@@ -14,8 +14,8 @@ public class AllahinCezasi : MonoBehaviour
     [SerializeField] int enemyfovRadius;
     public bool checkPlayer;
     public bool isDetecting = true;
-    [SerializeField] GameObject playerObj;
-    [SerializeField] int enemySpeed;
+    GameObject playerObj;
+    [SerializeField] float enemySpeed;
     void Start()
     {
         enemyHealth = new SurvivalBar();

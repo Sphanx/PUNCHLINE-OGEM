@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7861478964677279522}
   - component: {fileID: 2690300496292921511}
   - component: {fileID: 975973175911782034}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 7608638209528463730}
   - component: {fileID: 9150669506652579895}
   - component: {fileID: 5387419492882292295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,8 @@ GameObject:
   - component: {fileID: 7716726164323631033}
   - component: {fileID: 5092577323326252125}
   - component: {fileID: 6762321387100515916}
-  m_Layer: 0
+  - component: {fileID: 5431368039393776054}
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +318,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1ad117bbaaba1f5408785eeb03205eb9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -347,8 +348,8 @@ MonoBehaviour:
     m_Bits: 64
   enemyfovRadius: 8
   checkPlayer: 0
-  playerObj: {fileID: 0}
-  enemySpeed: 4
+  isDetecting: 1
+  enemySpeed: 2.5
 --- !u!114 &6762321387100515916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,9 +362,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537803b052271d24596a652fc71381bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
-  attackCooldown: 3
-  attackRange: 2
+  damageAmount: 20
+  attackCooldown: 4
+  attackRange: 1.2
+  playerController: {fileID: 0}
+  attackDelay: 0
+  enemyAttackAnimRange: 2.5
+  playerPosition: {x: 0, y: 0}
+--- !u!95 &5431368039393776054
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2542995538568322792}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03b3895c9086e524a95b7bc90dd98489, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2896640388160014705
 GameObject:
   m_ObjectHideFlags: 0
@@ -373,7 +399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 71237195739798926}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +436,7 @@ GameObject:
   m_Component:
   - component: {fileID: 747053163766262715}
   - component: {fileID: 8208465954748103365}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +526,7 @@ GameObject:
   - component: {fileID: 9056161686315486640}
   - component: {fileID: 1766209095146872841}
   - component: {fileID: 7056146731231122001}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
