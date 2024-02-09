@@ -13,7 +13,7 @@ TagManager:
   - UI
   - Player
   - Enemy
-  - 
+  - foreground
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
     locked: 0
   - name: midground
     uniqueID: 3949658919
+    locked: 0
+  - name: foreground
+    uniqueID: 2593676351
     locked: 0

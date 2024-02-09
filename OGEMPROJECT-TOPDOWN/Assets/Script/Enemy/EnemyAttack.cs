@@ -9,9 +9,7 @@ public class EnemyAttack : MonoBehaviour
     public float attackCooldown = 3f; // Sald�r�lar aras�ndaki cooldown s�resi (�rnekte 3 saniye)
     public float attackRange = 2f; // D��man�n sald�r� yapabilece�i maksimum mesafe
     public PlayerController playerController;
-    public float attackDelay;
     public float enemyAttackAnimRange;
-    private float cooldownTimer = 0f;
     public Vector2 playerPosition;
     float distanceToPlayer;
 
