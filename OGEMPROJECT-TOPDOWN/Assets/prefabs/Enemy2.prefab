@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 456712232042802315, guid: a7a0c95a32cb9b644b7b3d5dde324e6c, type: 3}
   bulletPos: {fileID: 1046227925176365116}
-  cooldown: 2
+  cooldown: 1.5
 --- !u!1 &6145807994232888914
 GameObject:
   m_ObjectHideFlags: 0

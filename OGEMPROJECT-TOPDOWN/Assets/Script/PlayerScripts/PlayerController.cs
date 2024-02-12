@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Potions potionsScript;
     [SerializeField] PotionCounter potionCounterScript;
     public Transform attackPoint;
+    public Transform aimPoint;
     public Rigidbody2D rb;
     #endregion
 
@@ -41,6 +42,8 @@ public class PlayerController : MonoBehaviour
     private bool isDashing = false;
     public Vector2 movementInput
     { get; set; }
+    private Vector2 lookDir;
+    private Vector2 aimDir;
 
     private Vector2 scale;
     SurvivalBar health;
@@ -101,6 +104,13 @@ public class PlayerController : MonoBehaviour
         {
             TakeDamage(31);
         }
+        aimPoint.position = new Vector3(aimDir.x, aimDir.y) + transform.position;
+    }
+
+    public void GetLook(InputAction.CallbackContext context)
+    {
+        aimDir = context.ReadValue<Vector2>().normalized;
+        Debug.Log("direction: " + aimDir);
     }
 
     //Player movement
@@ -207,24 +217,27 @@ public class PlayerController : MonoBehaviour
         {
             attackPoint.position += new Vector3(playerAttackScript.attackDistance, 0);
             playerAnimator.SetFloat("Xinput", 1);
+            lookDir = new Vector2(1, 0);
         }
         else if (movementInput.x < 0)
         {
             attackPoint.position += new Vector3(-playerAttackScript.attackDistance, 0);
             playerAnimator.SetFloat("Xinput", -1);
-
+            lookDir = new Vector2(-1, 0);
         }
         else if (movementInput.y > 0)
         {
             attackPoint.position += new Vector3(0, playerAttackScript.attackDistance);
             playerAnimator.SetFloat("Yinput", 1);
-
+            lookDir = new Vector2(0, 1);
         }
         else if (movementInput.y < 0)
         {
             attackPoint.position += new Vector3(0, -playerAttackScript.attackDistance);
             playerAnimator.SetFloat("Yinput", -1);
+            lookDir = new Vector2(0, -1);
         }
     }
+
 
 }
