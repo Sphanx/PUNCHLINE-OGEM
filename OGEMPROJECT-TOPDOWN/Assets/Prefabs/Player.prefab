@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 7124224083319630327}
   - component: {fileID: 9083466808192684229}
   - component: {fileID: 2237755765092964868}
-  - component: {fileID: 4864533093858779753}
   - component: {fileID: 3013747531818033390}
   m_Layer: 6
   m_Name: Player
@@ -105,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: -345308377
   m_SortingLayer: 2
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 38ef73720a2b1024fa97266514af960c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0efbea4bd947b38478844b5e477eeb3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -148,18 +147,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.015573859, y: 0.1837238}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4, y: 4}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.39579892, y: 0.61603916}
   m_EdgeRadius: 0
 --- !u!114 &2118706307333213407
 MonoBehaviour:
@@ -182,6 +181,10 @@ MonoBehaviour:
   potionNumber: 3
   isMoving: 0
   isTimerRunning: 0
+  speed: 0
+  arrowSpeed: 20
+  isShooting: 0
+  isAiming: 0
   Health: 100
   Stamina: 100
   staminaSlider: {fileID: 0}
@@ -189,10 +192,10 @@ MonoBehaviour:
   playerAttackScript: {fileID: 7124224083319630327}
   potionsScript: {fileID: 0}
   potionCounterScript: {fileID: 0}
+  arrowPrefab: {fileID: 1293970149031654528, guid: 34370eb8c75900c43a8a6648604b00e7, type: 3}
   attackPoint: {fileID: 4837804566868325125}
   aimPoint: {fileID: 2902676807154276519}
   rb: {fileID: 3013747531818033390}
-  arrowPrefab: {fileID: 1293970149031654528, guid: 34370eb8c75900c43a8a6648604b00e7, type: 3}
 --- !u!114 &7124224083319630327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,11 +212,13 @@ MonoBehaviour:
   damage: 50
   attackCD: 0.5
   attackDistance: 0.7
-  knockbackForce: 350
+  knockbackForce: 200
   enemyStun: 1.5
   reduceStaminaOnAttack: 35
   isHit: 0
   isAttacking: 0
+  targetTime: 1
+  slowOnAttack: 0.8
   attackRange: 0.75
   enemyLayers:
     serializedVersion: 2
@@ -276,7 +281,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2118706307333213407}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: GetLook
+        m_MethodName: GetLookMouse
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -392,25 +397,27 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8350f166-6f0a-49b9-a60a-567450a58049
     m_ActionName: Player/Shoot[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2118706307333213407}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: GetLookGamepad
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 6e0312d7-a11f-4ce1-b35a-1d75c28d4a83
+    m_ActionName: Player/LookGamepad[/DualShock4GamepadHID/rightStick]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &4864533093858779753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176494942015507830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 225d6ea7f3517af4ebce0f7f4d8c1177, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  speed: 0
 --- !u!50 &3013747531818033390
 Rigidbody2D:
   serializedVersion: 4
@@ -454,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2902676807154276519
 Transform:
   m_ObjectHideFlags: 0

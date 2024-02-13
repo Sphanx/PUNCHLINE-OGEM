@@ -8,15 +8,12 @@ public class Shooting : MonoBehaviour
     [SerializeField] Rigidbody2D arrowPrefab;
     [SerializeField] float speed;
 
+    public Transform aimObj;
+    Vector2 shootDir;
+
     private void FixedUpdate()
     {
-    }
-    public void Shoot(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Instantiate(arrowPrefab, transform.position, Quaternion.identity);
-            arrowPrefab.AddForce(speed * transform.forward, ForceMode2D.Impulse);
-        }
+            shootDir = (aimObj.position - transform.position).normalized;
+            arrowPrefab.AddForce(speed * shootDir, ForceMode2D.Impulse);
     }
 }

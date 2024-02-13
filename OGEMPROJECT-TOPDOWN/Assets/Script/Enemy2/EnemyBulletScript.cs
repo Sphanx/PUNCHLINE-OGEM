@@ -37,5 +37,9 @@ public class EnemyBulletScript : MonoBehaviour
             other.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
             Destroy(gameObject);
         }
+         if(other.gameObject.layer == 9)
+        {
+            Destroy(gameObject);
+        }
     }
 }

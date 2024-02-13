@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8621022277858297891}
   - component: {fileID: 2970880874655195801}
   - component: {fileID: 1481702250576882425}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Enemy2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -345308377
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -110,7 +110,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1046227925176365116}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: BulletPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}

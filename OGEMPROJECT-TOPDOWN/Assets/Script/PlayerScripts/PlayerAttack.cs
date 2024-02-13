@@ -15,13 +15,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] float reduceStaminaOnAttack;
     [Space(20)]
     [SerializeField] bool isHit;
-    [SerializeField] bool isAttacking = false;
+    public bool isAttacking = false;
     Vector2 knockbackDirection;
 
     float enemyStunPlaceHolder;
 
     AllahinCezasi currentEnemy;
-    
+    public float targetTime = 1f;
+    public float slowOnAttack;
 
 
     float lastDashTime;
@@ -38,6 +39,23 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         setEnemyStun();
+        
+        targetTime -= Time.deltaTime;
+        if (isAttacking)
+        {
+            if (targetTime <= 0)
+            {
+                isAttacking = false;
+                targetTime = 1f;
+            }
+
+        }
+        else
+        {
+            targetTime = 1f;
+        }
+       
+
     }
 
     public void Attack(InputAction.CallbackContext context)
@@ -45,6 +63,7 @@ public class PlayerAttack : MonoBehaviour
         if (context.performed && Time.time - lastDashTime > attackCD && (playerController.stamina.Bar > 0))
         {
             lastDashTime = Time.time;
+            isAttacking = true;
             
             Debug.Log("Saldýrdý");
             //Hit functions

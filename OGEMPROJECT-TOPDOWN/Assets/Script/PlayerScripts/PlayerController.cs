@@ -18,7 +18,12 @@ public class PlayerController : MonoBehaviour
     public int potionNumber;
     public bool isMoving;
     public bool isTimerRunning;
+    public float speed;
+    public float arrowSpeed;
+    public bool isShooting;
+    public bool isAiming;
     public IEnumerator currentStaminaRecovery;
+    Vector2 shootDir;
 
 
     [Space(20)]
@@ -33,9 +38,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerAttack playerAttackScript;
     [SerializeField] Potions potionsScript;
     [SerializeField] PotionCounter potionCounterScript;
+    [SerializeField] GameObject arrowPrefab;
     public Transform attackPoint;
     public Transform aimPoint;
     public Rigidbody2D rb;
+
     #endregion
 
     #region private fields
@@ -52,6 +59,9 @@ public class PlayerController : MonoBehaviour
     private float lastDashTime;
     private Animator playerAnimator;
 
+    GameObject arrow;
+    Rigidbody2D arrowRB;
+    Vector2 movement;
 
     #endregion
 
@@ -78,11 +88,18 @@ public class PlayerController : MonoBehaviour
 
     }
 
-
+   
     void Update()
     {
-        Vector2 movement = new Vector2(movementInput.x, movementInput.y) * moveSpeed * Time.deltaTime;  // assign movement info to vector2 movement
-        transform.Translate(movement);
+        movement = new Vector2(movementInput.x, movementInput.y) * moveSpeed * Time.deltaTime;  // assign movement info to vector2 movement
+        if (playerAttackScript.isAttacking)
+        {
+            transform.Translate(movement * playerAttackScript.slowOnAttack);
+        }
+        else
+        {
+            transform.Translate(movement);
+        }
         LookDirection();
         
         DecreaseValue();
@@ -104,13 +121,52 @@ public class PlayerController : MonoBehaviour
         {
             TakeDamage(31);
         }
+    }
+    
+
+    public void GetLookMouse(InputAction.CallbackContext context)
+    {
+        // Ekranýn geniþliði ve yüksekliðini al
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+        // Fare pozisyonunu al
+        Vector2 mousePosition = context.ReadValue<Vector2>();
+
+        // Ekranýn sol üstünden alýnan pozisyonu -1 ile 1 arasýnda normalleþtir
+        float x = (mousePosition.x / screenWidth) * 2 - 1;
+        float y = (mousePosition.y / screenHeight) * 2 - 1;
+
+        // Deðerleri -1 ile 1 arasýnda sýnýrla
+        x = Mathf.Clamp(x, -1f, 1f);
+        y = Mathf.Clamp(y, -1f, 1f);
+
+        // Yeni yönu oluþtur
+        float approachFactor = 1.5f; // Örneðin, 0.8 olarak ayarlayabilirsiniz
+
+        // Yeni yönu oluþtur ve objeye atama yap
+        Vector2 aimDirWithApproach = new Vector2(x * approachFactor, y * approachFactor);
+        aimPoint.position = new Vector3(aimDirWithApproach.x, aimDirWithApproach.y) + transform.position;
+
+
+
+    }
+    public void GetLookGamepad(InputAction.CallbackContext context)
+    {
+        Vector2 aimDir = context.ReadValue<Vector2>().normalized;
         aimPoint.position = new Vector3(aimDir.x, aimDir.y) + transform.position;
     }
-
-    public void GetLook(InputAction.CallbackContext context)
+    public void Shoot(InputAction.CallbackContext context)
     {
-        aimDir = context.ReadValue<Vector2>().normalized;
-        Debug.Log("direction: " + aimDir);
+        if (context.canceled)
+        {
+            shootDir = (aimPoint.position - transform.position).normalized;
+
+            arrow = Instantiate(arrowPrefab, transform.position, aimPoint.rotation);
+            arrowRB = arrow.GetComponent<Rigidbody2D>();
+            arrowRB.AddForce(arrowSpeed * shootDir, ForceMode2D.Impulse);
+            isShooting = true;
+        }
     }
 
     //Player movement
