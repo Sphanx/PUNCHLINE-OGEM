@@ -6,45 +6,63 @@ public class EnemyAttack : MonoBehaviour
 {
     // Start is called before the first frame update
     public int damageAmount = 10; // Sald�r� hasar miktar�
-    public float attackCooldown = 3f; // Sald�r�lar aras�ndaki cooldown s�resi (�rnekte 3 saniye)
     public float attackRange = 2f; // D��man�n sald�r� yapabilece�i maksimum mesafe
     public PlayerController playerController;
     public float enemyAttackAnimRange;
-    public Vector2 playerPosition;
+    [SerializeField] Transform playerPosition;
     float distanceToPlayer;
+
+    public float attackCooldown = 3f; // Sald�r�lar aras�ndaki cooldown s�resi (�rnekte 3 saniye)
+    public float timeRemaining;
+    [SerializeField] bool isAttacking;
 
     Animator enemyAnimator;
 
     private void Start()
     {
         enemyAnimator = GetComponent<Animator>();
+        timeRemaining = attackCooldown;
     }
     void Update()
     {
+        distanceToPlayer = Vector2.Distance(playerPosition.position, transform.position);
+
         // Cooldown s�resini kontrol et ve azalt
-        IsPlayerInRange();
+       
         // D��man�n oyuncuya sald�rma durumu (�rnek)
-        PlayenemyAttackAnim();
-        
+        PlayenemyAttackAnim(distanceToPlayer);
+
+
+         if(timeRemaining > 0)
+         {
+            timeRemaining -= Time.deltaTime;
+         }
+        if (IsPlayerInRange(distanceToPlayer))
+        {
+            if (timeRemaining <= 0)
+            {
+                isAttacking = true;
+                AttackPlayer();
+            }
+        }
+
+
     }
 
     void AttackPlayer()
     {
-        if (IsPlayerInRange())
+        if (isAttacking)
         {
             playerController.TakeDamage(damageAmount);
-            
+            Debug.Log("Enemy attacks player!");
+            timeRemaining = attackCooldown;
+            isAttacking = false;
         }
-        // Oyuncuya sald�rma kodlar� burada yaz�l�r
-        // �rne�in: Oyuncuya hasar verme
-        Debug.Log("Enemy attacks player!");
-
-        // Cooldown'u ba�lat
+        
     }
-    public void PlayenemyAttackAnim()
+    public void PlayenemyAttackAnim(float distanceBetween)
     {
-        distanceToPlayer = Vector2.Distance(playerPosition, transform.position);
-        if(distanceToPlayer <= enemyAttackAnimRange)
+        if(distanceBetween <= enemyAttackAnimRange)
         {
             enemyAnimator.SetBool("isAttacking", true);
         }
@@ -54,28 +72,16 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    bool IsPlayerInRange()
+    bool IsPlayerInRange(float distanceToPlayer)
     {
-
-        // D��man�n pozisyonunu al
-        Vector2 enemyPosition = transform.position;
-
-        // Oyuncu ile d��man aras�ndaki mesafeyi kontrol et
-        distanceToPlayer = Vector2.Distance(playerPosition, enemyPosition);
-
-        // E�er oyuncu d��man�n sald�r� alan�ndaysa true d�nd�r
-        return distanceToPlayer <= attackRange;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if(distanceToPlayer <= attackRange)
         {
-            // Oyuncuya sald�r
-            AttackPlayer();
+            return true;
         }
+        return false;
     }
-    
+
+  
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

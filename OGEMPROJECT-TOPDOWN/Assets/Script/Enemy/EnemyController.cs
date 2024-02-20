@@ -16,12 +16,15 @@ public class EnemyController : MonoBehaviour
     public bool isDetecting = true;
     GameObject playerObj;
     [SerializeField] float enemySpeed;
+
+    private Animator enemyAnimator;
     void Start()
     {
         enemyHealth = new SurvivalBar();
         enemyHealth.FullValue = health;
         enemyHealthSlider.maxValue = health;
         enemyHealthSlider.value = health;
+        enemyAnimator = GetComponent<Animator>();
 
         playerObj = GameObject.Find("Player");
     }
@@ -48,6 +51,9 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        //play anim
+        enemyAnimator.SetTrigger("isHurt");
+        //math stuff
         enemyHealth.DecreaseBar(amount);
         enemyHealthSlider.value = enemyHealth.Bar;
         if (enemyHealth.Bar <= 0)

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class PlayerAttack : MonoBehaviour
-{
+{   
     [SerializeField] PlayerController playerController;
+    
     [Space(20)]
     [SerializeField] int damage;
     [SerializeField] float attackCD;
@@ -20,8 +22,9 @@ public class PlayerAttack : MonoBehaviour
 
     float enemyStunPlaceHolder;
 
-    AllahinCezasi currentEnemy;
-    public float targetTime = 1f;
+    EnemyController currentEnemy;
+    public float attackSlowTime = 1f;
+    private float attackSlowPlaceHolder;
     public float slowOnAttack;
 
 
@@ -33,26 +36,27 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        enemyStunPlaceHolder = enemyStun;    
+        enemyStunPlaceHolder = enemyStun;
+        attackSlowPlaceHolder = attackSlowTime;
     }
 
     private void Update()
     {
         setEnemyStun();
-        
-        targetTime -= Time.deltaTime;
+
+        attackSlowTime -= Time.deltaTime;
         if (isAttacking)
         {
-            if (targetTime <= 0)
+            if (attackSlowTime <= 0)
             {
                 isAttacking = false;
-                targetTime = 1f;
+                attackSlowTime = attackSlowPlaceHolder;
             }
 
         }
         else
         {
-            targetTime = 1f;
+            attackSlowTime = attackSlowPlaceHolder;
         }
        
 
@@ -64,6 +68,8 @@ public class PlayerAttack : MonoBehaviour
         {
             lastDashTime = Time.time;
             isAttacking = true;
+            //shake Camera
+            CameraShake.Instance.ShakeCamera(5f, 0.1f);
             
             Debug.Log("Saldýrdý");
             //Hit functions
@@ -72,7 +78,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 isHit = true;
                 Debug.Log("Düþmana vurdu! " + enemy.name);
-                currentEnemy = enemy.GetComponent<AllahinCezasi>();
+                currentEnemy = enemy.GetComponent<EnemyController>();
                 AttackOutcome(enemy, currentEnemy);
                 
             }
@@ -102,7 +108,7 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.DrawWireSphere(playerController.attackPoint.position, attackRange);
     }    
     
-    public void AttackOutcome(Collider2D enemy, AllahinCezasi enemyScript)
+    public void AttackOutcome(Collider2D enemy, EnemyController enemyScript)
     {
         enemyScript.TakeDamage(damage);
         knockbackDirection = (enemy.transform.position - transform.position).normalized;

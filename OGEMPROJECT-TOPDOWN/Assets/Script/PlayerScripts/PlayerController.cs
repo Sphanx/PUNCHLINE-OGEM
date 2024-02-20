@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
     GameObject arrow;
     Rigidbody2D arrowRB;
     Vector2 movement;
-
+    Transform arrowRot;
     #endregion
 
     private void Awake()
@@ -121,11 +121,14 @@ public class PlayerController : MonoBehaviour
         {
             TakeDamage(31);
         }
+
+
     }
     
 
     public void GetLookMouse(InputAction.CallbackContext context)
     {
+        Cursor.visible = false;
         // Ekranýn geniþliði ve yüksekliðini al
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
@@ -148,20 +151,20 @@ public class PlayerController : MonoBehaviour
         Vector2 aimDirWithApproach = new Vector2(x * approachFactor, y * approachFactor);
         aimPoint.position = new Vector3(aimDirWithApproach.x, aimDirWithApproach.y) + transform.position;
 
-
+        aimPoint.right = aimDirWithApproach;
 
     }
     public void GetLookGamepad(InputAction.CallbackContext context)
     {
         Vector2 aimDir = context.ReadValue<Vector2>().normalized;
         aimPoint.position = new Vector3(aimDir.x, aimDir.y) + transform.position;
+        aimPoint.right = aimDir;
     }
     public void Shoot(InputAction.CallbackContext context)
     {
         if (context.canceled)
         {
             shootDir = (aimPoint.position - transform.position).normalized;
-
             arrow = Instantiate(arrowPrefab, transform.position, aimPoint.rotation);
             arrowRB = arrow.GetComponent<Rigidbody2D>();
             arrowRB.AddForce(arrowSpeed * shootDir, ForceMode2D.Impulse);

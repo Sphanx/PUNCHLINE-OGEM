@@ -12,7 +12,7 @@ public class Shooting : MonoBehaviour
     Vector2 shootDir;
 
     private void FixedUpdate()
-    {
+    {       
             shootDir = (aimObj.position - transform.position).normalized;
             arrowPrefab.AddForce(speed * shootDir, ForceMode2D.Impulse);
     }
