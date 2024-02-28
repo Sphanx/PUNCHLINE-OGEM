@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Potions potionsScript;
     [SerializeField] PotionCounter potionCounterScript;
     [SerializeField] GameObject arrowPrefab;
-    public Transform attackPoint;
     public Transform aimPoint;
     public Rigidbody2D rb;
 
@@ -212,9 +211,10 @@ public class PlayerController : MonoBehaviour
     {
         if(context.performed && potionsScript.numberOfPotions != 0)
         {
-            if(health.Bar > health.FullValue)
+            if(health.Bar >= health.FullValue)
             {
                 health.Bar = health.FullValue;
+                Debug.Log("can full, heallanamaz: " + health.Bar);
             }
             else
             {
@@ -271,30 +271,29 @@ public class PlayerController : MonoBehaviour
     }
     public void LookDirection()
     {
-        attackPoint.position = transform.position;
         if (movementInput.x > 0)
         {
-            attackPoint.position += new Vector3(playerAttackScript.attackDistance, 0);
             playerAnimator.SetFloat("Xinput", 1);
             lookDir = new Vector2(1, 0);
+            transform.localScale = new Vector3(1, 1, 1);
         }
         else if (movementInput.x < 0)
         {
-            attackPoint.position += new Vector3(-playerAttackScript.attackDistance, 0);
             playerAnimator.SetFloat("Xinput", -1);
             lookDir = new Vector2(-1, 0);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (movementInput.y > 0)
         {
-            attackPoint.position += new Vector3(0, playerAttackScript.attackDistance);
             playerAnimator.SetFloat("Yinput", 1);
             lookDir = new Vector2(0, 1);
+            transform.localScale = new Vector3(1, 1, 1);
         }
         else if (movementInput.y < 0)
         {
-            attackPoint.position += new Vector3(0, -playerAttackScript.attackDistance);
             playerAnimator.SetFloat("Yinput", -1);
             lookDir = new Vector2(0, -1);
+            transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 

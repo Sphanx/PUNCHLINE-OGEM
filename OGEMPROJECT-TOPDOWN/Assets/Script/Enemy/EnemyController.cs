@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
@@ -18,6 +19,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float enemySpeed;
 
     private Animator enemyAnimator;
+
+    private bool isFacingRight = false;
     void Start()
     {
         enemyHealth = new SurvivalBar();
@@ -47,6 +50,7 @@ public class EnemyController : MonoBehaviour
 
             }
         }
+        CheckFlipDirection();
     }
 
     public void TakeDamage(int amount)
@@ -88,8 +92,23 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, enemyfovRadius);
     }
 
-    public void A()
+    private void CheckFlipDirection()
     {
+        // Düþmanýn x eksenindeki hýzýný kontrol et
+        Vector2 horizontalSpeed = (playerObj.transform.position - transform.position).normalized;
+
+        // Eðer hýz pozitifse düþman saða doðru hareket ediyor demektir
+        // Scale'ý (-1, 1, 1) yaparak yatayda tersine çevir
+        if (horizontalSpeed.x > 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+            isFacingRight = true;
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+            isFacingRight = false;
+        }
 
     }
 }

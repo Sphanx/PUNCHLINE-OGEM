@@ -7,6 +7,9 @@ using Cinemachine;
 public class PlayerAttack : MonoBehaviour
 {   
     [SerializeField] PlayerController playerController;
+    [SerializeField] Transform attackPoint;
+    [SerializeField] Transform aimPoint;
+    [SerializeField] GameObject swordObj;
     
     [Space(20)]
     [SerializeField] int damage;
@@ -23,6 +26,7 @@ public class PlayerAttack : MonoBehaviour
     float enemyStunPlaceHolder;
 
     EnemyController currentEnemy;
+    Animator playerAnimator;
     public float attackSlowTime = 1f;
     private float attackSlowPlaceHolder;
     public float slowOnAttack;
@@ -38,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
     {
         enemyStunPlaceHolder = enemyStun;
         attackSlowPlaceHolder = attackSlowTime;
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -57,6 +62,9 @@ public class PlayerAttack : MonoBehaviour
         else
         {
             attackSlowTime = attackSlowPlaceHolder;
+            ResetAttackPoint();
+            swordObj.GetComponent<SpriteRenderer>().enabled = false;
+            swordObj.GetComponent<Animator>().enabled = false;
         }
        
 
@@ -70,10 +78,13 @@ public class PlayerAttack : MonoBehaviour
             isAttacking = true;
             //shake Camera
             CameraShake.Instance.ShakeCamera(5f, 0.1f);
-            
+            //set attack point
+            SetAttackPoint();
+            SetAttackPointRotation();
+
             Debug.Log("Saldýrdý");
             //Hit functions
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(playerController.attackPoint.position, attackRange, enemyLayers);
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
             foreach (Collider2D enemy in hitEnemies)
             {
                 isHit = true;
@@ -91,6 +102,10 @@ public class PlayerAttack : MonoBehaviour
             playerController.currentStaminaRecovery = playerController.StaminaRecovery();
             playerController.StartStaminaRecovery();
 
+            //set animation
+            playerAnimator.SetTrigger("Attack1");
+            swordObj.GetComponent<SpriteRenderer>().enabled = true;
+            swordObj.GetComponent<Animator>().enabled = true;
         }
     }
     private IEnumerator AttackAnimation()
@@ -101,11 +116,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (playerController.attackPoint == null)
+        if (attackPoint == null)
             return;
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(playerController.attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }    
     
     public void AttackOutcome(Collider2D enemy, EnemyController enemyScript)
@@ -137,5 +152,31 @@ public class PlayerAttack : MonoBehaviour
         {
             enemyStun = enemyStunPlaceHolder;
         }
+    }
+    public void SetAttackPoint()
+    {
+        Vector2 aimDir = (aimPoint.position - this.transform.position).normalized;
+        attackPoint.position = (new Vector3(aimDir.x/2, aimDir.y/2) + transform.position);
+    }
+    public void ResetAttackPoint()
+    {
+        attackPoint.position = transform.position;
+    }
+    public void SetAttackPointRotation()
+    {
+        Vector2 swordDirToPlayer = transform.position;
+
+        if(attackPoint.transform.position.x < swordDirToPlayer.x)
+        {
+            swordObj.GetComponent<SpriteRenderer>().flipY = true;
+        }
+        else
+        {
+            swordObj.GetComponent<SpriteRenderer>().flipY = false;
+        }
+        Vector3 direction = aimPoint.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        swordObj.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
     }
 }
