@@ -19,11 +19,9 @@ public class PlayerController : MonoBehaviour
     public bool isMoving;
     public bool isTimerRunning;
     public float speed;
-    public float arrowSpeed;
-    public bool isShooting;
-    public bool isAiming;
+
     public IEnumerator currentStaminaRecovery;
-    Vector2 shootDir;
+    
 
 
     [Space(20)]
@@ -38,7 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerAttack playerAttackScript;
     [SerializeField] Potions potionsScript;
     [SerializeField] PotionCounter potionCounterScript;
-    [SerializeField] GameObject arrowPrefab;
     public Transform aimPoint;
     public Rigidbody2D rb;
 
@@ -58,10 +55,9 @@ public class PlayerController : MonoBehaviour
     private float lastDashTime;
     private Animator playerAnimator;
 
-    GameObject arrow;
-    Rigidbody2D arrowRB;
+
+
     Vector2 movement;
-    Transform arrowRot;
     #endregion
 
     private void Awake()
@@ -84,6 +80,7 @@ public class PlayerController : MonoBehaviour
         scale = transform.localScale;
         
         isTimerRunning = false;
+
 
     }
 
@@ -159,17 +156,7 @@ public class PlayerController : MonoBehaviour
         aimPoint.position = new Vector3(aimDir.x, aimDir.y) + transform.position;
         aimPoint.right = aimDir;
     }
-    public void Shoot(InputAction.CallbackContext context)
-    {
-        if (context.canceled)
-        {
-            shootDir = (aimPoint.position - transform.position).normalized;
-            arrow = Instantiate(arrowPrefab, transform.position, aimPoint.rotation);
-            arrowRB = arrow.GetComponent<Rigidbody2D>();
-            arrowRB.AddForce(arrowSpeed * shootDir, ForceMode2D.Impulse);
-            isShooting = true;
-        }
-    }
+
 
     //Player movement
     public void Move(InputAction.CallbackContext context)
@@ -228,6 +215,11 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damageAmount)
     {
         health.DecreaseBar(damageAmount);
+        if (health.Bar <= 0)
+        {
+            health.Bar = 0;
+            Debug.Log("ded: " + health.Bar);
+        }
     }
     public void DecreaseValue(SurvivalBar survivalBar, float decreaseAmount)
     {
@@ -296,6 +288,5 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
     }
-
 
 }

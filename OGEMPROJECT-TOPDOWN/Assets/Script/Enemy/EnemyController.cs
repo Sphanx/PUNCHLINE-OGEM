@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     public bool isDetecting = true;
     GameObject playerObj;
     [SerializeField] float enemySpeed;
+    public float knockbackForce;
 
     private Animator enemyAnimator;
 
@@ -60,6 +61,8 @@ public class EnemyController : MonoBehaviour
         //math stuff
         enemyHealth.DecreaseBar(amount);
         enemyHealthSlider.value = enemyHealth.Bar;
+        Vector3 knockbackDirection = (this.transform.position - transform.position).normalized;
+        this.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
         if (enemyHealth.Bar <= 0)
         {
             Destroy(gameObject);
