@@ -25,11 +25,11 @@ public class EnemyAttack : MonoBehaviour
     }
     void Update()
     {
+        //get distance to player
         distanceToPlayer = Vector2.Distance(playerPosition.position, transform.position);
 
-        // Cooldown s�resini kontrol et ve azalt
        
-        // D��man�n oyuncuya sald�rma durumu (�rnek)
+        // play attack animation
         PlayenemyAttackAnim(distanceToPlayer);
 
 
@@ -44,6 +44,7 @@ public class EnemyAttack : MonoBehaviour
                 isAttacking = true;
                 AttackPlayer();
             }
+
         }
 
 
@@ -54,6 +55,8 @@ public class EnemyAttack : MonoBehaviour
         if (isAttacking)
         {
             playerController.TakeDamage(damageAmount);
+            Vector2 knockbackDirection = (playerController.GetComponent<Transform>().position - this.transform.position).normalized;
+            playerController.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * playerController.knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
             Debug.Log("Enemy attacks player!");
             timeRemaining = attackCooldown;
             isAttacking = false;

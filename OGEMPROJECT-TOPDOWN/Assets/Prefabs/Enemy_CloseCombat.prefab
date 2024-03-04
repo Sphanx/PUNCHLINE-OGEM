@@ -122,9 +122,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.008841276}
+  m_Offset: {x: 0, y: -0.0875898}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.21125144
 --- !u!50 &1220601001451843526
 Rigidbody2D:
   serializedVersion: 4
@@ -173,7 +173,7 @@ MonoBehaviour:
   checkPlayer: 0
   isDetecting: 1
   enemySpeed: 2
-  knockbackForce: 150
+  knockbackForce: 100
 --- !u!114 &6649262063808041743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,11 +187,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 25
-  attackRange: 0.4
+  attackRange: 0.6
   playerController: {fileID: 0}
   enemyAttackAnimRange: 1.75
   playerPosition: {fileID: 0}
-  attackCooldown: 4
+  attackCooldown: 1
   timeRemaining: 0
   isAttacking: 0
 --- !u!95 &8417279902931026907

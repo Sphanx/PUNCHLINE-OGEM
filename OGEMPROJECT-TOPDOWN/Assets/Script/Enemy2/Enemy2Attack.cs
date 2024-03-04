@@ -9,9 +9,11 @@ public class Enemy2Attack : MonoBehaviour
     public Transform bulletPos;
     public float cooldown;
     private float timer;
+    public float attackRange;
+    GameObject playerObj;
     void Start()
     {
-
+         playerObj = GameObject.FindGameObjectWithTag("Player");
     }
     void Update()
     {
@@ -25,7 +27,12 @@ public class Enemy2Attack : MonoBehaviour
     }
     void shoot()
     {
-        Instantiate(bullet, bulletPos.position, Quaternion.identity);
+        float distanceToPlayer = Vector2.Distance(this.transform.position, playerObj.transform.position);
+        if (distanceToPlayer < attackRange)
+        {
+            Instantiate(bullet, bulletPos.position, Quaternion.identity);
+
+        }
     }
 
 }

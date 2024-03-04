@@ -58,10 +58,11 @@ public class EnemyController : MonoBehaviour
     {
         //play anim
         enemyAnimator.SetTrigger("isHurt");
+        SoundManager.PlaySound(SoundManager.Sound.EnemyHit);
         //math stuff
         enemyHealth.DecreaseBar(amount);
         enemyHealthSlider.value = enemyHealth.Bar;
-        Vector3 knockbackDirection = (this.transform.position - transform.position).normalized;
+        Vector3 knockbackDirection = (this.transform.position - playerObj.transform.position).normalized;
         this.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
         if (enemyHealth.Bar <= 0)
         {
@@ -104,12 +105,12 @@ public class EnemyController : MonoBehaviour
         // Scale'ý (-1, 1, 1) yaparak yatayda tersine çevir
         if (horizontalSpeed.x > 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            this.GetComponent<SpriteRenderer>().flipX = true;
             isFacingRight = true;
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            this.GetComponent<SpriteRenderer>().flipX = false;
             isFacingRight = false;
         }
 

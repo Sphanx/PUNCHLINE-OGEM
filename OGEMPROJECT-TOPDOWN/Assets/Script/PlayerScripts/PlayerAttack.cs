@@ -120,6 +120,7 @@ public class PlayerAttack : MonoBehaviour
             swordAnimator.SetTrigger("Attack1");
             playerAnimator.SetTrigger("Attack1");
             swordObj.GetComponent<SpriteRenderer>().enabled = true;
+            SoundManager.PlaySound(SoundManager.Sound.PlayerAttack);
         }
     }
 

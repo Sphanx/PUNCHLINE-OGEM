@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public bool isMoving;
     public bool isTimerRunning;
     public float speed;
+    public float knockbackForce;
 
     public IEnumerator currentStaminaRecovery;
     
@@ -214,7 +215,10 @@ public class PlayerController : MonoBehaviour
     }
     public void TakeDamage(float damageAmount)
     {
+
         health.DecreaseBar(damageAmount);
+        playerAnimator.SetTrigger("isHurt");
+        
         if (health.Bar <= 0)
         {
             health.Bar = 0;
