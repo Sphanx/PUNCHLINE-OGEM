@@ -105,7 +105,6 @@ public class PlayerAttack : MonoBehaviour
                 Debug.Log("Düþmana vurdu! " + enemy.name);
                 currentEnemy = enemy.GetComponent<EnemyController>();
                 AttackOutcome(enemy, currentEnemy);
-                
             }
 
             //decrease stamina
