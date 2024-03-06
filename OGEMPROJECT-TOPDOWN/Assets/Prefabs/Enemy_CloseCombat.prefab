@@ -174,6 +174,7 @@ MonoBehaviour:
   isDetecting: 1
   enemySpeed: 2
   knockbackForce: 100
+  stopRange: 0
 --- !u!114 &6649262063808041743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,9 +189,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 25
   attackRange: 0.6
-  playerController: {fileID: 0}
+  playerController: {fileID: 2785515903473193864, guid: 30821a2f162a1364cb1a096c97bdc843, type: 3}
   enemyAttackAnimRange: 1.75
-  playerPosition: {fileID: 0}
+  playerPosition: {fileID: 5554950893359203876, guid: 30821a2f162a1364cb1a096c97bdc843, type: 3}
   attackCooldown: 1
   timeRemaining: 0
   isAttacking: 0

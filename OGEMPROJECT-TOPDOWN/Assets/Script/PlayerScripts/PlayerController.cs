@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PlayerAttack playerAttackScript;
     [SerializeField] Potions potionsScript;
     [SerializeField] PotionCounter potionCounterScript;
+    [SerializeField] GameObject mouseObjectObj;
     public Transform aimPoint;
     public Rigidbody2D rb;
 
@@ -125,7 +126,10 @@ public class PlayerController : MonoBehaviour
 
     public void GetLookMouse(InputAction.CallbackContext context)
     {
+        //enable mouse cursor
+        mouseObjectObj.SetActive(true);
         Cursor.visible = false;
+
         // Ekranýn geniþliði ve yüksekliðini al
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
@@ -156,6 +160,7 @@ public class PlayerController : MonoBehaviour
         Vector2 aimDir = context.ReadValue<Vector2>().normalized;
         aimPoint.position = new Vector3(aimDir.x, aimDir.y) + transform.position;
         aimPoint.right = aimDir;
+        mouseObjectObj.SetActive(false);
     }
 
 

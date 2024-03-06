@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
     GameObject playerObj;
     [SerializeField] float enemySpeed;
     public float knockbackForce;
+    public float stopRange;
 
     private Animator enemyAnimator;
 
@@ -45,9 +46,17 @@ public class EnemyController : MonoBehaviour
                 Debug.Log(enemyHealth.Bar);
             }
             if (checkPlayer == true)
-            {
-                FollowPlayer();
-                Debug.Log("Oyuncu Görüldü");
+            {  
+                if(stopRange >= (Vector2.Distance(playerObj.transform.position, this.transform.position)))
+                {
+                    transform.position = this.transform.position;
+                }
+                else
+                { 
+                    FollowPlayer();
+
+                }
+                Debug.Log("Oyuncu Görxüldü");
 
             }
         }
@@ -115,5 +124,7 @@ public class EnemyController : MonoBehaviour
         }
 
     }
+
+
 }
 
