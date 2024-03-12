@@ -7,13 +7,17 @@ public class EnemyAttack : MonoBehaviour
     // Start is called before the first frame update
     public int damageAmount = 10; // Sald�r� hasar miktar�
     public float attackRange = 2f; // D��man�n sald�r� yapabilece�i maksimum mesafe
+    public float attackSpeed;
     public PlayerController playerController;
     public float enemyAttackAnimRange;
     [SerializeField] Transform playerPosition;
     float distanceToPlayer;
 
-    public float attackCooldown = 3f; // Sald�r�lar aras�ndaki cooldown s�resi (�rnekte 3 saniye)
+    public float attackAnimCooldown = 3f; // Sald�r�lar aras�ndaki cooldown s�resi (�rnekte 3 saniye)
+    public float attackCooldown;
     public float timeRemaining;
+    public float timeRemainingAttack;
+
     [SerializeField] bool isAttacking;
 
     Animator enemyAnimator;
@@ -21,30 +25,39 @@ public class EnemyAttack : MonoBehaviour
     private void Start()
     {
         enemyAnimator = GetComponent<Animator>();
-        timeRemaining = attackCooldown;
+        timeRemaining = attackAnimCooldown;
+        timeRemainingAttack = 0;
+        
     }
     void Update()
     {
         //get distance to player
         distanceToPlayer = Vector2.Distance(playerPosition.position, transform.position);
 
-       
+
         // play attack animation
-        PlayenemyAttackAnim(distanceToPlayer);
-
-
-         if(timeRemaining > 0)
-         {
-            timeRemaining -= Time.deltaTime;
-         }
+        if(timeRemainingAttack > 0)
+        {
+            timeRemainingAttack -= Time.deltaTime;
+        }
         if (IsPlayerInRange(distanceToPlayer))
         {
-            if (timeRemaining <= 0)
+            if (timeRemainingAttack <= 0)
             {
                 isAttacking = true;
                 AttackPlayer();
             }
 
+        }
+        
+
+         if(timeRemaining > 0)
+         {
+            timeRemaining -= Time.deltaTime;
+         }
+        if(timeRemaining <= 0)
+        {
+            PlayenemyAttackAnim(distanceToPlayer);
         }
 
 
@@ -54,12 +67,13 @@ public class EnemyAttack : MonoBehaviour
     {
         if (isAttacking)
         {
+            
             playerController.TakeDamage(damageAmount);
             Vector2 knockbackDirection = (playerController.GetComponent<Transform>().position - this.transform.position).normalized;
-            playerController.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * playerController.knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            playerController.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * Time.fixedDeltaTime, ForceMode2D.Impulse);
             Debug.Log("Enemy attacks player!");
-            timeRemaining = attackCooldown;
             isAttacking = false;
+            timeRemainingAttack = attackCooldown;
         }
         
     }
@@ -68,6 +82,9 @@ public class EnemyAttack : MonoBehaviour
         if(distanceBetween <= enemyAttackAnimRange)
         {
             enemyAnimator.SetBool("isAttacking", true);
+            Vector2 dir = (playerController.GetComponent<Transform>().position - transform.position).normalized;
+            this.gameObject.GetComponent<Rigidbody2D>().AddForce(10 * attackSpeed * dir * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            timeRemaining = attackAnimCooldown;
         }
         else
         {

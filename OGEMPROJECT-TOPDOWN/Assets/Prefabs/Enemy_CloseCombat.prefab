@@ -188,12 +188,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 25
-  attackRange: 0.6
-  playerController: {fileID: 2785515903473193864, guid: 30821a2f162a1364cb1a096c97bdc843, type: 3}
-  enemyAttackAnimRange: 1.75
-  playerPosition: {fileID: 5554950893359203876, guid: 30821a2f162a1364cb1a096c97bdc843, type: 3}
-  attackCooldown: 1
+  attackRange: 0.7
+  attackSpeed: 15
+  playerController: {fileID: 0}
+  enemyAttackAnimRange: 2.7
+  playerPosition: {fileID: 0}
+  attackAnimCooldown: 3
+  attackCooldown: 2
   timeRemaining: 0
+  timeRemainingAttack: 0
   isAttacking: 0
 --- !u!95 &8417279902931026907
 Animator:

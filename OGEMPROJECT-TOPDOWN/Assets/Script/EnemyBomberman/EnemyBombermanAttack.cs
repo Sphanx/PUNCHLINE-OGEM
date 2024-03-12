@@ -6,6 +6,7 @@ public class EnemyBombermanAttack : MonoBehaviour
 {
     [SerializeField] GameObject bombPrefab;
     public float bombThrowForce;
+    public float bombThrowGravity;
     public float verticalForce;
     public float throwPeriod;
     public bool isThrowing = false;
@@ -19,6 +20,7 @@ public class EnemyBombermanAttack : MonoBehaviour
     {
         playerObj = GameObject.Find("Player");
         resetThrowPeriod = throwPeriod;
+        
     }
     private void Update()
     {
@@ -43,11 +45,11 @@ public class EnemyBombermanAttack : MonoBehaviour
     {
         //assign bomb prefab to bomb object
         bombObj = Instantiate(bombPrefab, transform.position, transform.rotation);
+        bombObj.GetComponent<Rigidbody2D>().gravityScale = bombThrowGravity;
 
         Vector2 throwDirection = (playerObj.transform.position - this.transform.position).normalized;
         //add force
-        bombObj.GetComponent<Rigidbody2D>().AddForce(bombThrowForce * throwDirection * Time.fixedDeltaTime,
-            ForceMode2D.Impulse);
+        bombObj.GetComponent<Rigidbody2D>().velocity = bombThrowForce * throwDirection * Time.fixedDeltaTime * new Vector2(1, verticalForce);
         isThrowing = true;
         throwPeriod = resetThrowPeriod;
     }
