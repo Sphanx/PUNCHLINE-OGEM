@@ -11,6 +11,9 @@ public class EnemyBombermanAttack : MonoBehaviour
     public float throwPeriod;
     public bool isThrowing = false;
     public float attackRange;
+    public float duration = 1.0f;
+    public float heightY = 3.0f;
+    public AnimationCurve curve;
 
     private GameObject bombObj;
     private GameObject playerObj;
@@ -41,15 +44,36 @@ public class EnemyBombermanAttack : MonoBehaviour
             }
         }
     }
+    public IEnumerator Curve(Vector3 start, Vector2 target, GameObject bombObj)
+    {
+        float timePassed = 0f;
+        Vector2 end = target;
+
+        while(timePassed < duration)
+        {
+            timePassed += Time.deltaTime;
+            float linearT = timePassed / duration;
+            float heightT = curve.Evaluate(linearT);
+            
+            float height = Mathf.Lerp(0f, heightY, heightT);
+
+            // update bomb position
+            bombObj.transform.position = Vector2.Lerp(start, end, linearT) + new Vector2(0f, height);
+
+            yield return null;
+        }
+        bombObj.GetComponent<BombScript>().IsTimerRunning = true;
+
+    }
     public void ThrowObject()
     {
         //assign bomb prefab to bomb object
         bombObj = Instantiate(bombPrefab, transform.position, transform.rotation);
         bombObj.GetComponent<Rigidbody2D>().gravityScale = bombThrowGravity;
 
-        Vector2 throwDirection = (playerObj.transform.position - this.transform.position).normalized;
         //add force
-        bombObj.GetComponent<Rigidbody2D>().velocity = bombThrowForce * throwDirection * Time.fixedDeltaTime * new Vector2(1, verticalForce);
+        StartCoroutine(Curve(this.transform.position, playerObj.transform.position,bombObj));
+
         isThrowing = true;
         throwPeriod = resetThrowPeriod;
     }
@@ -58,5 +82,8 @@ public class EnemyBombermanAttack : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, attackRange);
     }
-
+    private void CallBombScript()
+    {
+        bombObj.GetComponent<BombScript>().Explode();
+    }
 }
