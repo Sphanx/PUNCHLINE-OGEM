@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
     private float lastDashTime;
     private Animator playerAnimator;
+    private GameObject healEffectObj;
 
 
 
@@ -78,6 +79,7 @@ public class PlayerController : MonoBehaviour
         potionCounterScript.setPotionTextNumber(potionsScript);
 
         playerAnimator = GetComponent<Animator>();
+        healEffectObj = GameObject.Find("HealEffect");
 
         scale = transform.localScale;
         
@@ -212,8 +214,14 @@ public class PlayerController : MonoBehaviour
             else
             {
                 health.IncreaseBar(potionsScript.healAmount);
+                healEffectObj.GetComponent<HealEffect>().SetHealEffect();
                 potionsScript.numberOfPotions--;
                 potionCounterScript.setPotionTextNumber(potionsScript);
+
+                if (health.Bar >= health.FullValue)
+                {
+                    health.Bar = health.FullValue;
+                }
                 Debug.Log("health increased: " + health.Bar + "full health: " + health.FullValue);
             }
         }
