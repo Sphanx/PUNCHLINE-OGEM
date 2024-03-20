@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44227045aeaba34d998cea3c0f07bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 8
+  force: 6
   removeBulletTime: 10
   damage: 50
 --- !u!50 &-6191553897527827655
@@ -163,4 +163,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.49999997
+  m_Radius: 0.32

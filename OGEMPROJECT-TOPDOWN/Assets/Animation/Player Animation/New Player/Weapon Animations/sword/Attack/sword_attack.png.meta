@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8636ea4e0a309fc4a8f107a4840cc1c6
+guid: f220387929949ea41959c2ea85209f04
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -70,7 +70,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
@@ -110,106 +110,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: New_0
+      name: sword_attack_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 166
+        height: 128
+      alignment: 9
+      pivot: {x: 0.11, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef0b03f0ed8037d41ad2a800d78ddacc
-      internalID: -763840040
+      spriteID: f1e0b44401e699a4b9996558e9891e5e
+      internalID: -1250994542
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New_1
+      name: sword_attack_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 166
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 166
+        height: 128
+      alignment: 9
+      pivot: {x: 0.11, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fa61e30679f60e479fae54b5dc23c26
-      internalID: -1937106984
+      spriteID: 466b6ea4aa740544189eed3d0bf8646a
+      internalID: 1755787979
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New_2
+      name: sword_attack_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 332
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 166
+        height: 128
+      alignment: 9
+      pivot: {x: 0.11, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b42f8daa8dd154345841067231c630e2
-      internalID: 1408271045
+      spriteID: fb4adab3cda1d17449ecac841a75550a
+      internalID: -1605780246
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New_3
+      name: sword_attack_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 498
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 166
+        height: 128
+      alignment: 9
+      pivot: {x: 0.11, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f4a2b79496357f4aafdb5891b41291e
-      internalID: 609713666
+      spriteID: 5fc05a4f39b502343a7ec6c8ca824b12
+      internalID: 429991593
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: New_4
+      name: sword_attack_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 664
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 166
+        height: 128
+      alignment: 9
+      pivot: {x: 0.11, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ee17747b5742ac40bc4e15c2f3a626f
-      internalID: 2061010364
+      spriteID: 3153e0758bec33248a955dff46647553
+      internalID: 1169459019
       vertices: []
       indices: 
       edges: []
@@ -225,11 +225,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      New_0: -763840040
-      New_1: -1937106984
-      New_2: 1408271045
-      New_3: 609713666
-      New_4: 2061010364
+      sword_attack_0: -1250994542
+      sword_attack_1: 1755787979
+      sword_attack_2: -1605780246
+      sword_attack_3: 429991593
+      sword_attack_4: 1169459019
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

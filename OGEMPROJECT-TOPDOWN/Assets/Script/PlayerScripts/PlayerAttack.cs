@@ -21,6 +21,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackDistance;
     [SerializeField] float enemyStun;
     [SerializeField] float reduceStaminaOnAttack;
+    [SerializeField] float attackPointVar;
     [Space(20)]
     [SerializeField] bool isHit;
     public bool isAttacking = false;
@@ -189,7 +190,7 @@ public class PlayerAttack : MonoBehaviour
     public void SetAttackPoint()
     {
         Vector2 aimDir = (aimPoint.position - this.transform.position).normalized;
-        attackPoint.position = (new Vector3(aimDir.x/2, aimDir.y/2) + transform.position);
+        attackPoint.position = (new Vector3(aimDir.x/attackPointVar, aimDir.y/attackPointVar) + transform.position);
     }
     public void ResetAttackPoint()
     {

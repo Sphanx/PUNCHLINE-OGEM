@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: -345308377
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1811475881, guid: 6d73aa5e7c7908d44a5f4081dd871750, type: 3}
+  m_Sprite: {fileID: 191206940, guid: 6d73aa5e7c7908d44a5f4081dd871750, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.8627451}
   m_FlipX: 0
   m_FlipY: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
   enemyfovRadius: 5
   checkPlayer: 0
   isDetecting: 1
-  enemySpeed: 2
+  enemySpeed: 1.5
   knockbackForce: 100
   stopRange: 0
 --- !u!114 &6649262063808041743
@@ -189,9 +189,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 15
   attackRange: 0.5
+  attackSpeed: 10
   playerController: {fileID: 0}
   enemyAttackAnimRange: 1.75
   playerPosition: {fileID: 0}
+  attackAnimCooldown: 3
   attackCooldown: 1
   timeRemaining: 0
   timeRemainingAttack: 0

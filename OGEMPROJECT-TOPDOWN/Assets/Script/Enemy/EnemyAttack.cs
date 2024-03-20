@@ -15,9 +15,11 @@ public class EnemyAttack : MonoBehaviour
 
     public float attackAnimCooldown = 3f; // Sald�r�lar aras�ndaki cooldown s�resi (�rnekte 3 saniye)
     public float attackCooldown;
-    public float timeRemaining;
-    public float timeRemainingAttack;
 
+    [Space(10)]
+    [Header("Read Only")]
+    [SerializeField] float timeRemaining;
+    [SerializeField] float timeRemainingAttack;
     [SerializeField] bool isAttacking;
 
     Animator enemyAnimator;
