@@ -21,6 +21,7 @@ public class PlayerAttack : MonoBehaviour
     public float attackDistance;
     [SerializeField] float enemyStun;
     [SerializeField] float reduceStaminaOnAttack;
+    [SerializeField] float reduceStaminaOnShooting;
     [SerializeField] float attackPointVar;
     [Space(20)]
     [SerializeField] bool isHit;
@@ -87,7 +88,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (context.performed && Time.time - lastDashTime > attackCD && (playerController.stamina.Bar > 0))
+        if (context.performed && Time.time - lastDashTime > attackCD && (playerController.stamina.Bar >= reduceStaminaOnAttack))
         {
             lastDashTime = Time.time;
             isAttacking = true;
@@ -126,7 +127,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void Shoot(InputAction.CallbackContext context)
     {
-        if (context.canceled && arrowCounter > 0)
+        if (context.canceled && (arrowCounter > 0) && (playerController.stamina.Bar >= reduceStaminaOnShooting))
         {
             shootDir = (aimPoint.position - transform.position).normalized;
             arrow = Instantiate(arrowPrefab, transform.position, aimPoint.rotation);
@@ -135,7 +136,7 @@ public class PlayerAttack : MonoBehaviour
             isShooting = true;
 
             //decrease stamina
-            playerController.DecreaseValue(playerController.stamina, reduceStaminaOnAttack);
+            playerController.DecreaseValue(playerController.stamina, reduceStaminaOnShooting);
             Debug.Log("stamina: " + playerController.stamina.Bar);
 
             playerController.StopStaminaRecovery();

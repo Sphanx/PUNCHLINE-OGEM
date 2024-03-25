@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context)
     {
-       if (context.started && !isDashing && Time.time - lastDashTime > dashCooldown && (stamina.Bar > 0))
+       if (context.started && !isDashing && Time.time - lastDashTime > dashCooldown && (stamina.Bar >= reduceStmOnDash))
         {
             Debug.Log("DASH ATII");
             DecreaseValue(stamina, reduceStmOnDash);
@@ -242,7 +242,6 @@ public class PlayerController : MonoBehaviour
     {
         float barPlaceholder = survivalBar.Bar;
 
-        
         barPlaceholder -= decreaseAmount;
 
         if(barPlaceholder < 0)

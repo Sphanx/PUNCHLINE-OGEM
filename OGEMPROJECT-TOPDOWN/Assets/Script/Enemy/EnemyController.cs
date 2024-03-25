@@ -19,10 +19,22 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float enemySpeed;
     public float knockbackForce;
     public float stopRange;
+    public float runAwayRange;
 
     private Animator enemyAnimator;
 
     private bool isFacingRight = false;
+    
+    
+    public enum EnemyType
+    {
+        bomberman,
+        slime,
+        turret
+    }
+    public EnemyType enemyType;
+
+
     void Start()
     {
         enemyHealth = new SurvivalBar();
@@ -39,14 +51,12 @@ public class EnemyController : MonoBehaviour
     {
         if (isDetecting)
         {
+            //Checks player in an area
             DetectPlayer();
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                TakeDamage(50);
-                Debug.Log(enemyHealth.Bar);
-            }
+
             if (checkPlayer == true)
             {  
+                //stop if at a certain distance from the player
                 if(stopRange >= (Vector2.Distance(playerObj.transform.position, this.transform.position)))
                 {
                     transform.position = this.transform.position;
@@ -54,13 +64,21 @@ public class EnemyController : MonoBehaviour
                 else
                 { 
                     FollowPlayer();
-
                 }
-                Debug.Log("Oyuncu Görxüldü");
 
+                //run away function if this is bomberman enemy type
+                if(enemyType == EnemyType.bomberman)
+                {
+                   if(runAwayRange >= (Vector2.Distance(playerObj.transform.position, this.transform.position)))
+                   {
+                        RunAway();
+                   }
+                }
+                Debug.Log("Oyuncu Görüldü");
             }
         }
         CheckFlipDirection();
+    
     }
 
     public void TakeDamage(int amount)
@@ -93,7 +111,11 @@ public class EnemyController : MonoBehaviour
         }
 
     }
-
+    public void RunAway()
+    {
+        Vector2 direction = (transform.position - playerObj.transform.position).normalized;
+        transform.Translate(direction * enemySpeed * Time.deltaTime);
+    }
     public void FollowPlayer()
     {
         Vector2 direction = (playerObj.transform.position - transform.position).normalized;

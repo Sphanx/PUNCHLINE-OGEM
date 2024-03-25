@@ -164,5 +164,5 @@ MonoBehaviour:
   explosionRadius: 1.2
   explosionDelay: 4
   bombDamage: 10
-  timeRemainingToExpload: 0
+  timeRemainingToExpload: 2
   isTimerRunning: 0
