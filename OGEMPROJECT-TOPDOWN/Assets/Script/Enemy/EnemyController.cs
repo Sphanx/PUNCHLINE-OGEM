@@ -91,7 +91,14 @@ public class EnemyController : MonoBehaviour
         enemyHealthSlider.value = enemyHealth.Bar;
         Vector3 knockbackDirection = (this.transform.position - playerObj.transform.position).normalized;
         this.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
-        if (enemyHealth.Bar <= 0)
+        
+        //do these if this is attached to turret
+        if(enemyType == EnemyType.turret && enemyHealth.Bar <= 0)
+        {
+            Destroy(this.gameObject.GetComponent<Enemy2Attack>());
+            Destroy(this);
+        }
+        else if(enemyHealth.Bar <= 0 )
         {
             Destroy(gameObject);
         }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 public class BombScript : MonoBehaviour
@@ -13,12 +15,17 @@ public class BombScript : MonoBehaviour
     public int bombDamage;
     [SerializeField] float timeRemainingToExpload;
     [SerializeField] bool isTimerRunning = false;
-
+    Vector3 lastPosition;
+    float changingDistance = 0;
     public bool IsTimerRunning
     {
         set { isTimerRunning = value; }
     }
 
+    private void Start()
+    {
+        lastPosition = transform.position;
+    }
     // Start is called before the first frame update
     private void Update()
     {
@@ -32,6 +39,18 @@ public class BombScript : MonoBehaviour
             {
                 Explode();
             }
+        }
+
+        Vector3 currentPosition = transform.position;
+
+        if (currentPosition == lastPosition)
+        {
+            Debug.Log("Nesne durdu!");
+        }
+        else
+        {
+            Debug.Log("Nesne hareket ediyor!");
+            lastPosition = currentPosition; // Yeni pozisyonu kaydediyoruz.
         }
     }
     // The explosion method

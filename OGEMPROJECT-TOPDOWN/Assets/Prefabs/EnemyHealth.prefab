@@ -287,7 +287,6 @@ GameObject:
   - component: {fileID: 1941630841682286401}
   - component: {fileID: 6089550484954387681}
   - component: {fileID: 8290195186233188838}
-  - component: {fileID: 9025097238581227973}
   m_Layer: 7
   m_Name: EnemyHealth
   m_TagString: Untagged
@@ -312,7 +311,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.15, y: -0.73}
+  m_AnchoredPosition: {x: -0.15002441, y: -0.72998047}
   m_SizeDelta: {x: 0.307, y: 0.8596}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1941630841682286401
@@ -378,17 +377,3 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &9025097238581227973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8605844203156538170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc5209e392dcde47828344fc97cc71d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyObj: {fileID: 0}
-  healthBarPosition: {x: 0, y: 0.3, z: 0}

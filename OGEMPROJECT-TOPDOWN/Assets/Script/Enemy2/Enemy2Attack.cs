@@ -11,28 +11,44 @@ public class Enemy2Attack : MonoBehaviour
     private float timer;
     public float attackRange;
     GameObject playerObj;
+    private Animator animator;
     void Start()
     {
          playerObj = GameObject.FindGameObjectWithTag("Player");
+         animator = this.GetComponent<Animator>();
     }
     void Update()
     {
+
+
+        if (timer > cooldown)
+        {
+            animator.SetBool("isAttacking", true);
+
+        }
         timer += Time.deltaTime;
-        
+        //timer ends
         if (timer > cooldown)
         {
             timer = 0;
-            shoot();
+            if (checkPlayerInRange())
+            {
+                Shoot();
+            }
         }
     }
-    void shoot()
+    bool checkPlayerInRange()
     {
         float distanceToPlayer = Vector2.Distance(this.transform.position, playerObj.transform.position);
         if (distanceToPlayer < attackRange)
         {
-            Instantiate(bullet, bulletPos.position, Quaternion.identity);
-
+            return true;
         }
+        return false;
     }
-
+    void Shoot()
+    {
+        Instantiate(bullet, bulletPos.position, Quaternion.identity);
+        animator.SetBool("isAttacking", false);
+    }
 }
