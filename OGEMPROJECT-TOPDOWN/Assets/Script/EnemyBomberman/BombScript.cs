@@ -7,6 +7,9 @@ using UnityEngine.Rendering;
 
 public class BombScript : MonoBehaviour
 {
+    //animator constant
+    private const string EXPLODE = "Explode";
+
     // The radius of the explosion
     public float explosionRadius = 5f;
 
@@ -17,6 +20,8 @@ public class BombScript : MonoBehaviour
     [SerializeField] bool isTimerRunning = false;
     Vector3 lastPosition;
     float changingDistance = 0;
+
+    private Animator bombAnimator;
     public bool IsTimerRunning
     {
         set { isTimerRunning = value; }
@@ -25,6 +30,7 @@ public class BombScript : MonoBehaviour
     private void Start()
     {
         lastPosition = transform.position;
+        bombAnimator = GetComponent<Animator>();
     }
     // Start is called before the first frame update
     private void Update()
@@ -37,7 +43,7 @@ public class BombScript : MonoBehaviour
             }
             else
             {
-                Explode();
+                bombAnimator.SetBool(EXPLODE, true);
             }
         }
 

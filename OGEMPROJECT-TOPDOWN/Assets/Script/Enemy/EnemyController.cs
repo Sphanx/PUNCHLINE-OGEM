@@ -90,7 +90,8 @@ public class EnemyController : MonoBehaviour
         enemyHealth.DecreaseBar(amount);
         enemyHealthSlider.value = enemyHealth.Bar;
         Vector3 knockbackDirection = (this.transform.position - playerObj.transform.position).normalized;
-        this.GetComponent<Rigidbody2D>().AddForce(knockbackDirection * knockbackForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
+
+        transform.Translate(knockbackDirection * knockbackForce * Time.deltaTime);
         
         //do these if this is attached to turret
         if(enemyType == EnemyType.turret && enemyHealth.Bar <= 0)
