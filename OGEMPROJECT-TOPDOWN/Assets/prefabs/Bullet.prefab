@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 6
   removeBulletTime: 10
-  damage: 50
+  damage: 10
 --- !u!50 &-6191553897527827655
 Rigidbody2D:
   serializedVersion: 4

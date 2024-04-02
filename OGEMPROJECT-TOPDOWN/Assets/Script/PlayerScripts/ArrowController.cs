@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,9 +38,15 @@ public class ArrowController : MonoBehaviour
         //enemy
         if (other.gameObject.layer == 7)
         {
-            
-            other.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
-            Destroy(gameObject);
+            try
+            {
+                other.gameObject.GetComponent<EnemyController>().TakeDamage(damage);
+                Destroy(gameObject);
+            }
+            catch(Exception e)
+            {
+
+            }
         }
         
     }

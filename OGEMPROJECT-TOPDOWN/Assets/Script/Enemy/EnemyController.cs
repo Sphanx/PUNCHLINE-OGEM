@@ -90,12 +90,13 @@ public class EnemyController : MonoBehaviour
         enemyHealth.DecreaseBar(amount);
         enemyHealthSlider.value = enemyHealth.Bar;
         Vector3 knockbackDirection = (this.transform.position - playerObj.transform.position).normalized;
-
+        //push enemy
         transform.Translate(knockbackDirection * knockbackForce * Time.deltaTime);
         
         //do these if this is attached to turret
         if(enemyType == EnemyType.turret && enemyHealth.Bar <= 0)
         {
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0.74f, 0.74f, 0.74f, 0.9f);
             Destroy(this.gameObject.GetComponent<Enemy2Attack>());
             Destroy(this);
         }

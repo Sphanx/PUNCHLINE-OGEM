@@ -22,6 +22,7 @@ public class BombScript : MonoBehaviour
     float changingDistance = 0;
 
     private Animator bombAnimator;
+    [SerializeField] GameObject bombExplosionArea;
     public bool IsTimerRunning
     {
         set { isTimerRunning = value; }
@@ -49,14 +50,17 @@ public class BombScript : MonoBehaviour
 
         Vector3 currentPosition = transform.position;
 
-        if (currentPosition == lastPosition)
-        {
-            Debug.Log("Nesne durdu!");
-        }
-        else
+        if(currentPosition != lastPosition) 
         {
             Debug.Log("Nesne hareket ediyor!");
             lastPosition = currentPosition; // Yeni pozisyonu kaydediyoruz.
+        }
+        else
+        {
+            BombAttackArea bombAttackArea = GetComponentInChildren<BombAttackArea>();
+            bombExplosionArea.SetActive(true);
+            bombAttackArea.SetBombArea(explosionRadius);
+            Debug.Log("Nesne durdu!");
         }
     }
     // The explosion method
